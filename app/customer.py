@@ -1,5 +1,5 @@
 import math
-from typing import List, Dict
+from typing import Dict
 
 from app import Shop
 from app.car import Car
@@ -28,14 +28,15 @@ class Customer:
         trip_cost = fuel_needed * fuel_price
         return round(trip_cost, 2)
 
-
     def choose_cheapest_store(self, shops: Dict[str, Shop], fuel_price: float) -> str:
         cheapest_store = None
         lowest_price = float("inf")
         for shop_name, shop in shops.items():
-            price = self.calculate_trip_cost(shop.location, fuel_price)
-            if price < lowest_price:
-                lowest_price = price
+            trip_cost = self.calculate_trip_cost(shop.location, fuel_price)
+            purchase_cost = shop.calculate_purchase_cost(self.product_cart)
+            total_cost = trip_cost + purchase_cost
+            if total_cost < lowest_price:
+                lowest_price = total_cost
                 cheapest_store = shop_name
         return cheapest_store
 

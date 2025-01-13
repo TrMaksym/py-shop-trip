@@ -23,12 +23,12 @@ def shop_trip():
 
     customers = []
 
-    for customer_data in config['customers']:
-        name = customer_data['name']
-        product_cart = customer_data['product_cart']
-        location = tuple(customer_data['location'])
-        money = customer_data['money']
-        car_data = customer_data['car']
+    for customer_data in config["customers"]:
+        name = customer_data["name"]
+        product_cart = customer_data["product_cart"]
+        location = tuple(customer_data["location"])
+        money = customer_data["money"]
+        car_data = customer_data["car"]
         car = Car(car_data['brand'], car_data['fuel_consumption'])
         customers.append(Customer(name, product_cart, location, money, car))
 
@@ -68,17 +68,18 @@ def shop_trip():
             continue
 
         print(f"{customer.name} rides home")
-        customer.location = config['customers'][customers.index(customer)]['location']
+        customer.location = config['customers'][customers.index(customer)]["location"]
         print(f"{customer.name} now has {customer.money:.2f} dollars\n")
 
 
-def print_receipt(customer_name: str, shop: Shop, purchase_cost: float):
-    current_time = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-    print(f"""
-Date: {current_time}
-Thanks, {customer_name}, for your purchase at {shop.name}!
-You have bought: 
-""")
-    for product, price in shop.products.items():
-        print(f"{product}: {price} dollars")
-    print(f"Total cost is {purchase_cost:.2f} dollars\nSee you again!")
+def print_receipt(self):
+    print(f"Date: {datetime.datetime.now()}")
+    print(f"Thanks, {self.name}, for your purchase!")
+    print("You have bought:")
+    for product, quantity in self.product_cart.items():
+        if quantity > 0:
+            print(f"{quantity} {product}(s) for {self.products[product] * quantity} dollars")
+
+    total_cost = self.calculate_purchase_cost(self.product_cart)
+    print(f"Total cost: {total_cost} dollars")
+    print("See you again!")

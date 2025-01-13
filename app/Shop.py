@@ -16,7 +16,7 @@ class Shop:
 
         return round(total_cost, 2)
 
-    def is_product_available(self, product_cart):
+    def is_product_available(self, product_cart: Dict[str, int]) -> bool:
         for product, quantity in product_cart.items():
             if product not in self.products or self.products[product] < quantity:
                 return False
