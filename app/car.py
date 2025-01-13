@@ -7,5 +7,6 @@ class Car:
         fuel_needed = (distance / 100) * self.fuel_consumption
         return round(fuel_needed * fuel_price, 2)
 
-    def __str__(self):
-        return f"Car(brand: {self.brand}, Fuel Consumption: {self.fuel_consumption} l/100 km)"
+    def __str__(self) -> str:
+        return (f"Car(brand: {self.brand}, "
+                f"Fuel Consumption: {self.fuel_consumption} l/100 km)")
